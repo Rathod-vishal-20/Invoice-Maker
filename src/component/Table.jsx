@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { toWords } from 'number-to-words'; // Import the toWords function
 
 function Table() {
   const [items, setItems] = useState([]);
@@ -19,6 +20,11 @@ function Table() {
 
   const calculateTotal = () => {
     return items.reduce((total, item) => total + (parseFloat(item.amount) || 0), 0).toFixed(2);
+  };
+
+  const convertTotalToWords = () => {
+    const total = calculateTotal();
+    return toWords(Math.floor(total)); // Convert only the integer part
   };
 
   const handlePrint = () => {
@@ -89,6 +95,8 @@ function Table() {
       ))}
       <div className='flex flex-row justify-between font-semibold mt-4'>
         <span>Total Amount:</span>
+      
+        <span>{convertTotalToWords()}</span> {/* Display the total amount in words */}
         <span>{calculateTotal()}</span>
       </div>
       <button
